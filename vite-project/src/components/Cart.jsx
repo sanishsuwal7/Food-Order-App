@@ -18,8 +18,12 @@ export default function Cart() {
         progressCtx.hideCart();
     }
 
+    function handleGoToCheckout() {
+        progressCtx.showCheckout();
+    }
+
     return (
-        <Modal className="cart" open = {progressCtx.progress === 'cart'}>
+        <Modal className="cart" open = {progressCtx.progress === 'cart'} onClose={progressCtx.progress === 'cart' ?handleCloseCart: null}>
             <h2>Your Cart</h2>
             <ul>
                 {cartCtx.items.map((item) => (
@@ -29,7 +33,7 @@ export default function Cart() {
             <p className="cart-total">{currencyFormatter.format(cartTotal)}</p>
             <p className="modal-actions">
                 <Buttons onClick={handleCloseCart} textOnly>Close</Buttons>
-                <Buttons onClick={handleCloseCart}>Go to Checkout</Buttons>
+                {cartCtx.items.length > 0  && (<Buttons onClick={handleGoToCheckout}>Go to Checkout</Buttons>)}
             </p>
         </Modal>
     )
